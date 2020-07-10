@@ -223,6 +223,7 @@ int HelloHttpsClient::run()
                    resp_200 ? "OK" : "FAIL");
     mbedtls_printf("HTTP: Received message:\n%s\n", gp_buf);
 
+    network->disconnect();
     return 0;
 }
 
@@ -236,13 +237,19 @@ int HelloHttpsClient::configureTCPSocket()
         return -1;
     }
     ret = network->connect();
-    if (ret != 0) {
+    if ((ret != 0) && (ret != -3015)) {
         mbedtls_printf("Error! network->connect() returned: %d\n", ret);
         return ret;
     }
 
     if ((ret = socket.open(network)) != NSAPI_ERROR_OK) {
         mbedtls_printf("socket.open() returned %d\n", ret);
+        if(ret <0)
+        {
+            mbedtls_printf("attempting socket.close and netowrk->disconnect\r\n");
+            socket.close();
+            network->disconnect();
+        }
         return ret;
     }
 

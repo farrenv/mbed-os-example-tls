@@ -1,6 +1,6 @@
 {
     "macros": [
-        "MBED_CONF_APP_MAIN_STACK_SIZE=4096",
+        "MBED_CONF_APP_MAIN_STACK_SIZE=8192",
         "MBEDTLS_USER_CONFIG_FILE=\"mbedtls_entropy_config.h\""
     ],
     "config": {
@@ -28,10 +28,26 @@
     },
     "target_overrides": {
         "*": {
-             "platform.stdio-convert-newlines": true
-        },
-        "UBLOX_EVK_ODIN_W2": {
-            "target.network-default-interface-type" : "ETHERNET"
+             "platform.stdio-convert-newlines": true,
+             "platform.stdio-baud-rate": 115200,
+             "mbed-trace.enable": true,
+             "nsapi.default-cellular-apn" : "\"J108.com.attz\"",
+             "target.network-default-interface-type": "CELLULAR",
+             "lwip.ipv4-enabled": true,
+             "ppp.ipv4-enabled": true,
+             "lwip.ipv6-enabled": true,
+             "ppp.ipv6-enabled": true,
+             "lwip.ethernet-enabled": false,
+             "lwip.ppp-enabled": true,
+             "lwip.tcp-enabled": true,
+             "platform.default-serial-baud-rate": 115200,
+             "platform.stdio-buffered-serial": true,
+             "cellular.debug-at": false,
+             "cellular.use-apn-lookup": true,
+             "nsapi.default-cellular-sim-pin": null,
+             "nsapi.default-cellular-plmn": null,
+             "nsapi.default-cellular-username": null,
+             "nsapi.default-cellular-password": null
         }
     }
 }
