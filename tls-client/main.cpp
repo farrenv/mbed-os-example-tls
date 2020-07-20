@@ -135,7 +135,9 @@ void run_example_in_event_queue(void)
     system_reset_timeout.detach();
 
     //manually call destructor to cleanup
-    client->~HelloHttpsClient();
+    //client->~HelloHttpsClient();
+    delete client;
+    client = NULL;
     // Send graceful power off signal to the cell module
     cellular_on_off_key = 0;
     ThisThread::sleep_for(3500ms); // 3.5 seconds
